@@ -14,21 +14,13 @@ def search_patents(request):
     if request.method == 'POST':
         text = request.POST.get("text")
         
-
+        check_text= "give me only minimum 5-7 word to so that i can search on google patent to match my idea with any which is relevant remember your response should be those 5-7 word nothing else"
 
         model = genai.GenerativeModel("gemini-pro")
         chat = model.start_chat()
-
-
-
-
-        check_text= "give me only minimum 5-7 word to so that i can search and compare to match my idea with any other idea which is relevant, remember your response should be those 5-7 word nothing else"
-
-
-
         res = chat.send_message(text+check_text)
         scrape_patent_data(res.text)
-        prompt="commpare both idea and tell if any thing is common in them i am giving you abstract idea of both the project with intention of identifying if my idea is different and can be put to publish and patent tell your opinion if they are similar and what way before this prompt the idea which is ours is given and after this text all the idea which are patented is there  "
+        prompt="commpare both idea and tell if any thing is common in them i am giving you abstrat idea of both the project with intentiono of identifying if my idea is different and can be put to publish and patent tell your opinion if they are similar and what way before this prompt the idea which is ours is given and after this text all the idea which are on google patent is there with its patent no . In response mention the patent number also "
         with open("data.txt","r+",encoding="utf-8") as file:
             data = file.read()
         response = chat.send_message(text+prompt+data)
